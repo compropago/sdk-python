@@ -9,7 +9,7 @@ class Request:
             aux = json.loads(res)
 
             if 'type' in aux and aux['type'] == 'error':
-                raise Exception('Error '+str(aux['code'])+': '+aux['message'])
+                raise Exception('Error : '+aux['message'])
             else:
                 return True
         else:
@@ -17,6 +17,8 @@ class Request:
 
     @staticmethod
     def get(url, auth=None, headers=None):
+        print(url)
+
         http = Http(url)
         http.set_auth(auth)
         http.set_method('GET')
