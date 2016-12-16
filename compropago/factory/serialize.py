@@ -9,6 +9,7 @@ from compropago.factory.models.instructions import Instructions
 from compropago.factory.models.neworderinfo import NewOrderInfo
 from compropago.factory.models.orderinfo import OrderInfo
 from compropago.factory.models.provider import Provider
+from compropago.factory.models.smsinfo import SmsInfo
 from compropago.factory.models.smsobject import SmsObject
 from compropago.factory.models.smsdata import SmsData
 from compropago.factory.models.webhook import Webhook
@@ -20,7 +21,7 @@ class Serialize:
 
     @staticmethod
     def place_order_info(data=None):
-        if data is None:
+        if not data:
             return PlaceOrderInfo(None, None, None, None, None)
         else:
             return PlaceOrderInfo(
@@ -38,7 +39,7 @@ class Serialize:
 
     @staticmethod
     def cp_order_info(data=None):
-        if data is None:
+        if not data:
             return CpOrderInfo()
         else:
             obj = CpOrderInfo()
@@ -65,9 +66,11 @@ class Serialize:
             obj.description = data['description']
             obj.dispute = data['dispute']
 
+            return obj
+
     @staticmethod
     def customer(data=None):
-        if data is None:
+        if not data:
             return Customer()
         else:
             obj = Customer()
@@ -80,7 +83,7 @@ class Serialize:
 
     @staticmethod
     def eval_auth_info(data=None):
-        if data is None:
+        if not data:
             return EvalAuthInfo()
         else:
             obj = EvalAuthInfo()
@@ -95,46 +98,47 @@ class Serialize:
 
     @staticmethod
     def fee_details(data=None):
-        if data is None:
+        if not data:
             return FeeDetails()
         else:
             obj = FeeDetails()
 
-            obj.amount = data['amount']
-            obj.currency = data['currency']
-            obj.type = data['type']
-            obj.description = data['description']
-            obj.application = data['application']
-            obj.amount_refunded = data['amount_refunded']
-            obj.tax = data['tax']
+            obj.amount = data['amount'] if 'amount' in data else None
+            obj.currency = data['currency'] if 'currency' in data else None
+            obj.type = data['type'] if 'type' in data else None
+            obj.description = data['description'] if 'description' in data else None
+            obj.application = data['application'] if 'application' in data else None
+            obj.tax_percent = data['tax_percent'] if 'tax_percent' in data else None
+            obj.amount_refunded = data['amount_refunded'] if 'amount_refunded' in data else None
+            obj.tax = data['tax'] if 'tax' in data else None
 
             return obj
 
     @staticmethod
     def instruction_details(data=None):
-        if data is None:
+        if not data:
             return InstructionDetails()
         else:
             obj = InstructionDetails()
 
-            obj.amount = data['amount']
-            obj.store = data['store']
-            obj.payment_amount = data['payment_amount']
-            obj.payment_store = data['payment_store']
-            obj.bank_account_holder_name = data['bank_account_holder_name']
-            obj.bank_account_number = data['banl_accont_number']
-            obj.bank_reference = data['bank_reference']
-            obj.company_reference_name = data['company_reference_name']
-            obj.company_reference_number = data['company_reference_number']
-            obj.company_bank_number = data['company_bank_number']
-            obj.order_reference_number = data['order_reference_number']
-            obj.bank_name = data['bank_name']
+            obj.amount = data['amount'] if 'amount' in data else None
+            obj.store = data['store'] if 'store' in data else None
+            obj.payment_amount = data['payment_amount'] if 'payment_amount' in data else None
+            obj.payment_store = data['payment_store'] if 'payment_store' in data else None
+            obj.bank_account_holder_name = data['bank_account_holder_name'] if 'bank_account_holder_name' in data else None
+            obj.bank_account_number = data['bank_accont_number'] if 'bank_accont_number' in data else None
+            obj.bank_reference = data['bank_reference'] if 'bank_reference' in data else None
+            obj.company_reference_name = data['company_reference_name'] if 'company_reference_name' in data else None
+            obj.company_reference_number = data['company_reference_number'] if 'company_reference_number' in data else None
+            obj.company_bank_number = data['company_bank_number'] if 'company_bank_number' in data else None
+            obj.order_reference_number = data['order_reference_number'] if 'order_reference_number' in data else None
+            obj.bank_name = data['bank_name'] if 'bank_name' in data else None
 
             return obj
 
     @staticmethod
     def instructions(data=None):
-        if data is None:
+        if not data:
             return Instructions()
         else:
             obj = Instructions()
@@ -153,7 +157,7 @@ class Serialize:
 
     @staticmethod
     def new_order_info(data=None):
-        if data is None:
+        if not data:
             return NewOrderInfo()
         else:
             obj = NewOrderInfo()
@@ -169,21 +173,23 @@ class Serialize:
             obj.fee_details = Serialize.fee_details(data['fee_details'])
             obj.instructions = Serialize.instructions(data['instructions'])
 
+            return obj
+
     @staticmethod
     def order_info(data=None):
-        if data is None:
+        if not data:
             return OrderInfo()
         else:
             obj = OrderInfo()
 
-            obj.order_id = data['order_id']
-            obj.order_price = data['order_price']
-            obj.order_name = data['order_name']
-            obj.payment_method = data['payment_method']
-            obj.store = data['store']
-            obj.country = data['country']
-            obj.image_url = data['image_url']
-            obj.success_url = data['success_url']
+            obj.order_id = data['order_id'] if 'order_id' in data else None
+            obj.order_price = data['order_price'] if 'order_price' in data else None
+            obj.order_name = data['order_name'] if 'order_name' in data else None
+            obj.payment_method = data['payment_method'] if 'payment_method' in data else None
+            obj.store = data['store'] if 'store' in data else None
+            obj.country = data['country'] if 'country' in data else None
+            obj.image_url = data['image_url'] if 'image_url' in data else None
+            obj.success_url = data['success_url'] if 'success_url' in data else None
 
             return obj
 
@@ -208,7 +214,7 @@ class Serialize:
 
     @staticmethod
     def sms_object(data=None):
-        if data is None:
+        if not data:
             return SmsObject()
         else:
             obj = SmsObject()
@@ -221,7 +227,7 @@ class Serialize:
 
     @staticmethod
     def sms_data(data=None):
-        if data is None:
+        if not data:
             return SmsData()
         else:
             obj = SmsData()
@@ -231,15 +237,28 @@ class Serialize:
             return obj
 
     @staticmethod
+    def sms_info(data=None):
+        if not data:
+            return SmsInfo()
+        else:
+            obj = SmsInfo()
+
+            obj.type = data['type']
+            obj.object = data['object']
+            obj.data = Serialize.sms_data(data['data'])
+
+            return obj
+
+    @staticmethod
     def webhook(data=None):
-        if data is None:
+        if not data:
             return Webhook()
         else:
             obj = Webhook()
 
-            obj.id = data['id']
-            obj.url = data['url']
-            obj.mode = data['mode']
-            obj.status = data['status']
+            obj.id = data['id'] if 'id' in data else None
+            obj.url = data['url'] if 'url' in data else None
+            obj.mode = data['mode'] if 'mode' in data else None
+            obj.status = data['status'] if 'status' in data else None
 
             return obj

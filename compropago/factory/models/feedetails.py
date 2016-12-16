@@ -4,6 +4,7 @@ class FeeDetails:
     type = None
     description = None
     application = None
+    tax_percent = None
     amount_refunded = None
     tax = None
 

@@ -8,8 +8,10 @@ class Factory:
 
     @staticmethod
     def get_instance_of(class_name, data=None):
-        if data:
+        if data and isinstance(data, str):
             data = json.loads(data)
+        elif data and isinstance(data, dict):
+            data = data
 
         if class_name is 'CpOrderInfo':
             return Serialize.cp_order_info(data)
@@ -38,6 +40,8 @@ class Factory:
                 array_aux.append(Serialize.provider(provider))
 
             return array_aux
+        elif class_name is 'SmsInfo':
+            return Serialize.sms_info(data)
         elif class_name is 'SmsData':
             return Serialize.sms_data(data)
         elif class_name is 'SmsObject':
@@ -51,3 +55,5 @@ class Factory:
                 array_aux.append(Serialize.webhook(webhook))
 
             return array_aux
+        else:
+            raise Exception('Object not in factory.')
