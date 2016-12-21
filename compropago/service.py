@@ -52,7 +52,7 @@ class Service:
             "app_client_version": order.app_client_version
         }
 
-        response = Request.post(self.client.deploy_uri+'charges/', self.client.get_full_auth(), params)
+        response = Request.post(self.client.deploy_uri+'charges/', params, self.client.get_full_auth())
 
         obj = Factory.get_instance_of('NewOrderInfo', response)
 
@@ -63,9 +63,7 @@ class Service:
 
         params = {"customer_phone": number}
 
-        res = Request.post(self.client.deploy_uri+'charges/'+order_id+'/sms', self.client.get_full_auth(), params)
-
-        print(res)
+        res = Request.post(self.client.deploy_uri+'charges/'+order_id+'/sms', params, self.client.get_full_auth())
 
         obj = Factory.get_instance_of('SmsInfo', res)
 
@@ -76,7 +74,7 @@ class Service:
 
         params = {"url": url}
 
-        res = Request.post(self.client.deploy_uri+'webhooks/stores/', self.client.get_full_auth(), params)
+        res = Request.post(self.client.deploy_uri+'webhooks/stores/', params, self.client.get_full_auth())
 
         obj = Factory.get_instance_of('Webhook', res)
 
@@ -87,7 +85,7 @@ class Service:
 
         params = {"url": url}
 
-        res = Request.put(self.client.deploy_uri+'webhooks/stores/'+webhook_id+'/', self.client.get_full_auth(), params)
+        res = Request.put(self.client.deploy_uri+'webhooks/stores/'+webhook_id+'/', params, self.client.get_full_auth())
 
         obj = Factory.get_instance_of('Webhook', res)
 
@@ -105,7 +103,7 @@ class Service:
     def list_webhooks(self):
         Validations.validate_gateway(self.client)
 
-        res = Request.get(self.client.deploy_uri+'webhooks/stores/', self.client.get_full_auth())
+        res = Request.get(self.client.deploy_uri+'webhooks/stores/', None, self.client.get_full_auth())
 
         obj = Factory.get_instance_of('ListWebhooks', res)
 

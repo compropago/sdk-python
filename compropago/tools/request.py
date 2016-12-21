@@ -17,8 +17,6 @@ class Request:
 
     @staticmethod
     def get(url, auth=None, headers=None):
-        print(url)
-
         http = Http(url)
         http.set_auth(auth)
         http.set_method('GET')
@@ -30,7 +28,7 @@ class Request:
         return response
 
     @staticmethod
-    def post(url, auth, data, headers=None):
+    def post(url, data, auth=None, headers=None):
         http = Http(url)
         http.set_method('POST')
         http.set_auth(auth)
@@ -43,7 +41,7 @@ class Request:
         return response
 
     @staticmethod
-    def put(url, auth, data, headers=None):
+    def put(url, data, auth=None, headers=None):
         http = Http(url)
         http.set_method('PUT')
         http.set_auth(auth)
@@ -56,7 +54,7 @@ class Request:
         return response
 
     @staticmethod
-    def delete(url, auth, data=None, headers=None):
+    def delete(url, data=None, auth=None, headers=None):
         http = Http(url)
         http.set_method('DELETE')
         http.set_auth(auth)
