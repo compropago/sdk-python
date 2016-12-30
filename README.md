@@ -30,23 +30,10 @@ Con ComproPago puede recibir pagos en OXXO, 7Eleven y más tiendas en todo Méxi
 ## Requerimientos
 
 * Python 3
-* Ruby >= 1.9
+* requests 2.9.1
 
 
 ## Instalación ComproPago Ruby Gem
-
-
-### Instalacion por *rubygems.org*
-Puede instalar directamente la gema con el comando siguiente:
-
-```bash
-gem install compropago_sdk
-```
-
-O puede optar por agregarlo a su lista de dependencias dentro de su archivo *Gemfile* de la siguiente forma:
-```ruby
-gem 'compropago_sdk'
-```
 
 
 ### Instalación por GitHub
@@ -59,21 +46,7 @@ O si lo deseas puedes obtener el repositorio
 
 ```bash
 #repositorio en su estado actual (*puede no ser versión estable*)
-git clone https://github.com/compropago/compropago-ruby.git
-```
-
-Finalizada la descarga del código de la gema descomprime el archivo descargado e ingresa en la carpeta
-resultante. En una terminal con los siguientes comandos:
-
-```bash
-# Desinstalará cualquier versión anterior del la gema
-sudo gem uninstall compropago*
-
-# Generación del nuevo compilado de la gema
-gem build compropago.gemspec
-
-# Instalación del nuevo compilado
-sudo gem install compropago*.gem
+git clone https://github.com/compropago/sdk-python.git
 ```
 
 ## Documentación
@@ -107,33 +80,35 @@ Se debe tener una cuenta activa de ComproPago.
 
 ### General
 
-Para poder hacer uso de la librería es necesario incluir la librería principales de la gema
+Para poder hacer uso de la librería es necesario incluir la librería principales de la libreria
 
-```ruby
-require 'compropago_sdk'
+```python
+from compropago.client import Client
+from compropago.tools.validations import Validations
+from compropago.factory.factory import Factory
 ```
 
 ### Configuración del Cliente
 
-Para hacer uso de la gema y llamados al API es necesario que primero configures tus Llaves de conexión y crees
+Para hacer uso de la libreria y llamados al API es necesario que primero configures tus Llaves de conexión y crees
 un instancia de Client.
 *Tus llaves las encontraras en su Panel de ComproPago en el menú Configuración.*
 
 [Consulta Aquí tus Llaves](https://compropago.com/panel/configuracion)
 
-```ruby
+```python
 # @param string publickey     Llave publica correspondiente al modo de la tienda
 # @param string privatekey    Llave privada correspondiente al modo de la tienda
 # @param bool   live          Modo de la tienda (false = Test | true = Live)
 
-client = Client.new(
+client = Client(
     'pk_test_5989d8209974e2d62',  # publickey
     'sk_test_6ff4e982253c44c42',  # privatekey
-    false                         # live
+    False                         # live
 )
 ```
 
-### Uso Básico de la gema
+### Uso Básico de la libreria
 
 > Consulta la documentación de la librería Ruby de ComproPago para conocer más de sus capacidades, configuraciones y métodos.
 
@@ -149,33 +124,32 @@ de la variable **client** como se muestra a continuación.
 ##### Crear una nueva orden de Pago
 
 
-```ruby
+```python
 
 order_info = {
-    order_id: 123,
-    order_name: 'M4 unit ruby',
-    order_price: 123.45,
-    customer_name: 'Eduardo Aguilar',
-    customer_email: 'eduardo.aguilar@compropago.com'
+    'order_id': 123,
+    'order_name': 'M4 unit ruby',
+    'order_price': 123.45,
+    'customer_name': 'Eduardo Aguilar',
+    'customer_email': 'eduardo.aguilar@compropago.com'
 }
 
-order = Factory::get_instance_of 'PlaceOrderInfo', order_info
+order = Factory.get_instance_of('PlaceOrderInfo', order_info)
 
 
 # Llamada al método 'place_order' del API para generar la órden
 
 # @param [PlaceOrderInfo] order
 # @return [NewOrderInfo]
-new_order = client.api.place_order order
+new_order = client.api.place_order(order)
 ```
 
 ###### Prototipo del método place_order()
 
-```ruby
+```python
 # @param [PlaceOrderInfo] info
 # @return [NewOrderInfo]
-def place_order(info)
-end
+def place_order(self, info)
 ```
 
 ##### Verificar el Estatus de una orden
@@ -185,7 +159,7 @@ del objeto **Client** y el cual regresa una instancia **CpOrderInfo**. Este mét
 por ComproPago para cada orden. Tambien puede obtener este ID desde un objeto **NewOrderInfo** accediendo al
 atributo **id**.
 
-```ruby
+```python
 
 # Guardar el ID de la orden
 order_id = "ch_xxxx_xxx_xxx_xxxx";
@@ -195,16 +169,15 @@ order_id = new_order.id
 
 
 # Se manda llamar al metodo del API para recuperar la informacion de la orden
-info = client.api.verify_order order_id
+info = client.api.verify_order(order_id)
 ```
 
 ###### Prototipo del método verify_order()
 
-```ruby
+```python
 # @param [String] id
 # @return [CpOrderInfo]
-def verify_order(id)
-end
+def verify_order(self, id)
 ```
 
 
@@ -214,27 +187,26 @@ Para obtener el listado de Proveedores disponibles para realizar el pago de las 
 **list_providers** que se encuentra alojado en el atributo **api** del objeto **Client** y el cual regresa una instancia
 de tipo **Array** la cual contendrá objetos de tipo **Provider**
 
-```ruby
-providers = client.api.list_providers
+```python
+providers = client.api.list_providers()
 ```
 
 ###### Prototipo del metodo get_providers()
 
-```ruby
+```python
 # @param [Bolean] auth
 # @param [Float] limit
 # @param [Bolean] fetch
 # @return [Array]
-def list_providers(auth = false, limit = 0)
-end
+def list_providers(self, auth = False, limit = 0)
 ```
 
 ##### Envío de instrucciones SMS
 
-Para realizar el el envío de las instrucciones de compra vía SMS es necesario llamar al método **send_sms_instructions** que se
+Para realizar el el envío de las instrucciones de compra vía SMS es necesario llamar al método **send_sms_instructions** 
 que se encuentra alojado en el atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **SmsInfo**
 
-```CSharp
+```python
 # Número al cual se enviaran las instrucciones
 phone_number = "55xxxxxxxx";
 
@@ -242,100 +214,103 @@ phone_number = "55xxxxxxxx";
 order_id = "ch_xxxxx-xxxxx-xxxxx-xxxxx";
 
 # Llamada al método del API para envío de las instrucciones
-smsinfo = client.api.send_sms_instructions phone_number , order_id
+smsinfo = client.api.send_sms_instructions(phone_number , order_id)
 ```
 
 ###### Prototipo del método send_sms_instructions()
 
-```ruby
+```python
 # @param [String] number
 # @param [String] id
 # @return [SmsInfo]
-def send_sms_instructions(number, id)
-end
+def send_sms_instructions(self, number, id)
 ```
 
 #### Webhooks
 
-Los webhooks son de suma importancia para el proceso las órdenes de ComproPago, ya que ellos se encargaran de recibir las notificaciones del cambio en los estatus de las órdenes de compra generadas, tambien deberán contener parte de la lógica de aprobación en su tienda en línea. El proceso es el siguiente:
+Los webhooks son de suma importancia para el proceso las órdenes de ComproPago, ya que ellos se encargaran de recibir 
+las notificaciones del cambio en los estatus de las órdenes de compra generadas, tambien deberán contener parte de la 
+lógica de aprobación en su tienda en línea. El proceso es el siguiente:
 
-1. Cuando una órden cambia su estatus, nuestra plataforma le notificará a cada una de las rutas registradas, dicho cambio con la información de la orden modificada en formato JSON.
-2. Deberá recuperar este JSON en una cadena de texto para posteriormente convertirla a un objeto de tipo **CpOrderInfo** haciendo uso de la clase Factory que proporciona el SDK de la siguiente forma:
+1. Cuando una órden cambia su estatus, nuestra plataforma le notificará a cada una de las rutas registradas, dicho 
+cambio con la información de la orden modificada en formato JSON.
+2. Deberá recuperar este JSON en una cadena de texto para posteriormente convertirla a un objeto de tipo **CpOrderInfo**
+haciendo uso de la clase Factory que proporciona el SDK de la siguiente forma:
 
-```ruby
-info = Factory.get_instance_of 'CpOrderInfo', cadena_obtenida
+```python
+info = Factory.get_instance_of('CpOrderInfo', cadena_obtenida)
 ```
 
 3. Generar la lógica de aprobación correspondiente al estatus de la órden.
 
 ##### Crear un nuevo Webhook
 
-Para crear un nuevo Webhook en la cuenta, se debe de llamar al método **create_webhook** que se encuentra alojado en el atributo **api**
-del objeto **Client** y el cual regresa una instancia de tipo **Webhook**
+Para crear un nuevo Webhook en la cuenta, se debe de llamar al método **create_webhook** que se encuentra alojado en el 
+atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **Webhook**
 
-```ruby
+```python
 # Se pasa como paramtro la URL al webhook
-webhook = client.api.create_webhook 'http://sitio.com/webhook'
+webhook = client.api.create_webhook('http://sitio.com/webhook')
 ```
 
 ###### Prototipo del método create_webhook()
 
-```ruby
+```python
 # @param [String] url
 # @return [Webhook]
-def create_webhook(url)
-end
+def create_webhook(self, url)
 ```
 
 ##### Actualizar un Webhook
 
-Para actualizar la url de un webhook, se debe de llamar al método **update_webhook** que se encuentra alojado en el atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **Webhook**
+Para actualizar la url de un webhook, se debe de llamar al método **update_webhook** que se encuentra alojado en el 
+atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **Webhook**
 
-```ruby
-updated_webhook = client.api.update_webhook webhook.id, 'http://sitio.com/nuevo_webhook'
+```python
+updated_webhook = client.api.update_webhook(webhook.id, 'http://sitio.com/nuevo_webhook')
 ```
 
 ###### Prototipo del método update_webhook()
 
-```ruby
+```python
 # @param [String] url
 # @param [String] id
 # @return [Webhook]
-def update_webhook(id, url)
-end
+def update_webhook(self, id, url)
 ```
 
 ##### Eliminar un Webhook
 
-Para eliminar un webhook, se debe de llamar al método **delete_webhook** que se encuentra alojado en el atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **Webhook**
+Para eliminar un webhook, se debe de llamar al método **delete_webhook** que se encuentra alojado en el atributo **api**
+del objeto **Client** y el cual regresa una instancia de tipo **Webhook**
 
-```ruby
-deleted_webhook = client.api.delete_webhook webhook.id
+```python
+deleted_webhook = client.api.delete_webhook(webhook.id)
 ```
 
 ###### Prototipo del método delete_webhook()
 
-```ruby
+```python
 # @param [String] id
 # @return [Webhook]
-def delete_webhook(id)
-end
+def delete_webhook(self, id)
 ```
 
 ##### Obtener listado de Webhooks registrados
 
-Para obtener la lista de webhooks registrados en una cuenta, se debe de llamar al método **list_webhook** que se encuentra alojado en el atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **Array** la cual contiene objetos de tipo **Webhook**
+Para obtener la lista de webhooks registrados en una cuenta, se debe de llamar al método **list_webhook** que se 
+encuentra alojado en el atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **Array** la cual
+contiene objetos de tipo **Webhook**
 
-```ruby
-webhooks = client.api.list_webhooks
+```python
+webhooks = client.api.list_webhooks()
 ```
 
 ###### Prototipo del método list_webhook()
 
-```ruby
+```python
 # @return [Array]
-def list_webhooks
-end
+def list_webhooks(self)
 ```
 
 
