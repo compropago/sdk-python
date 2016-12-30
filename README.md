@@ -33,14 +33,14 @@ Con ComproPago puede recibir pagos en OXXO, 7Eleven y más tiendas en todo Méxi
 * requests 2.9.1
 
 
-## Instalación ComproPago Ruby Gem
+## Instalación ComproPago Python SDK
 
 
 ### Instalación por GitHub
 
 Puedes descargar alguna de las versiones que hemos publicado:
 
-- [Consultar Versiones Publicadas en GitHub](https://github.com/compropago/compropago-ruby/releases)
+- [Consultar Versiones Publicadas en GitHub](https://github.com/compropago/sdk-python/releases)
 
 O si lo deseas puedes obtener el repositorio
 
@@ -51,7 +51,7 @@ git clone https://github.com/compropago/sdk-python.git
 
 ## Documentación
 
-### Documentación ComproPago Ruby Gem
+### Documentación ComproPago Python SDK
 
 ### Documentación de ComproPago
 
@@ -110,7 +110,7 @@ client = Client(
 
 ### Uso Básico de la libreria
 
-> Consulta la documentación de la librería Ruby de ComproPago para conocer más de sus capacidades, configuraciones y métodos.
+> Consulta la documentación de la librería Python de ComproPago para conocer más de sus capacidades, configuraciones y métodos.
 
 
 #### Llamados al los servicios por SDK
@@ -128,7 +128,7 @@ de la variable **client** como se muestra a continuación.
 
 order_info = {
     'order_id': 123,
-    'order_name': 'M4 unit ruby',
+    'order_name': 'M4 unit python',
     'order_price': 123.45,
     'customer_name': 'Eduardo Aguilar',
     'customer_email': 'eduardo.aguilar@compropago.com'
