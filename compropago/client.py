@@ -3,11 +3,10 @@ from compropago.service import Service
 
 
 class Client:
-    def __init__(self, publickey, privatekey, live, contained=""):
+    def __init__(self, publickey, privatekey, live):
         self.publickey = publickey
         self.privatekey = privatekey
         self.live = live
-        self.contained = contained
 
         if live:
             self.deploy_uri = config.SETTINGS['api_live_uri']
