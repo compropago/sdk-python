@@ -1,3 +1,6 @@
 .idea/
 prueba.py
+compropago/__pycache__/
 compropago/tools/__pycache__/
+compropago/factory/__pycache__/
+compropago/factory/models/__pycache__/
