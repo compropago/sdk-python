@@ -5,7 +5,10 @@ from compropago.factory.factory import Factory
 class Validations:
     @staticmethod
     def eval_auth(client):
-        response = Request.get(client.deploy_uri+'users/auth', client.get_full_auth())
+        response = Request.get(
+            client.deploy_uri+'users/auth',
+            {'user': client.get_user(), 'pass': client.get_pass()}
+        )
         info = Factory.get_instance_of('EvalAuthInfo', response)
 
         if info.code == 200:

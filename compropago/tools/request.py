@@ -28,7 +28,7 @@ class Request:
         return response
 
     @staticmethod
-    def post(url, data, auth=None, headers=None):
+    def post(url, data=None, auth=None, headers=None):
         http = Http(url)
         http.set_method('POST')
         http.set_auth(auth)
@@ -41,7 +41,7 @@ class Request:
         return response
 
     @staticmethod
-    def put(url, data, auth=None, headers=None):
+    def put(url, data=None, auth=None, headers=None):
         http = Http(url)
         http.set_method('PUT')
         http.set_auth(auth)
