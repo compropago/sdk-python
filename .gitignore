@@ -4,3 +4,7 @@ compropago/__pycache__/
 compropago/tools/__pycache__/
 compropago/factory/__pycache__/
 compropago/factory/models/__pycache__/
+compropago/*.pyc
+compropago/tools/*.pyc
+compropago/factory/*.pyc
+compropago/factory/models/*.pyc
