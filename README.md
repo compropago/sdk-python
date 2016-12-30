@@ -185,7 +185,7 @@ def verify_order(self, id)
 
 Para obtener el listado de Proveedores disponibles para realizar el pago de las ordenes es necesario consultar el método
 **list_providers** que se encuentra alojado en el atributo **api** del objeto **Client** y el cual regresa una instancia
-de tipo **Array** la cual contendrá objetos de tipo **Provider**
+de tipo **list** la cual contendrá objetos de tipo **Provider**
 
 ```python
 providers = client.api.list_providers()
@@ -197,7 +197,7 @@ providers = client.api.list_providers()
 # @param [Bolean] auth
 # @param [Float] limit
 # @param [Bolean] fetch
-# @return [Array]
+# @return [list]
 def list_providers(self, auth = False, limit = 0)
 ```
 
@@ -299,7 +299,7 @@ def delete_webhook(self, id)
 ##### Obtener listado de Webhooks registrados
 
 Para obtener la lista de webhooks registrados en una cuenta, se debe de llamar al método **list_webhook** que se 
-encuentra alojado en el atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **Array** la cual
+encuentra alojado en el atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **list** la cual
 contiene objetos de tipo **Webhook**
 
 ```python
@@ -309,7 +309,7 @@ webhooks = client.api.list_webhooks()
 ###### Prototipo del método list_webhook()
 
 ```python
-# @return [Array]
+# @return [list]
 def list_webhooks(self)
 ```
 
