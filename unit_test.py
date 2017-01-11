@@ -103,6 +103,21 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(res)
 
+    def test_providers_currency(self):
+        res = True
+        try:
+            obj = Client(self.publickey, self.privatekey, self.mode)
+            provs = obj.api.list_providers(False, 700, 'USD')
+
+            for prov in provs:
+                if prov.transaction_limit < 15000:
+                    res = False
+                    break
+        except Exception as e:
+            print(e.args)
+
+        self.assertTrue(res)
+
     def test_service_place_order(self):
         res = False
         try:
