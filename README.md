@@ -35,6 +35,13 @@ Con ComproPago puede recibir pagos en OXXO, 7Eleven y más tiendas en todo Méxi
 
 ## Instalación ComproPago Python SDK
 
+### Instalacion por Pypi
+
+Puede descargar facilmente el sdk de compropago con el manejador de paquetes de Python **Pypi** con el siguiente comando
+
+```bash
+pip3 install compropago
+```
 
 ### Instalación por GitHub
 
@@ -50,10 +57,6 @@ git clone https://github.com/compropago/sdk-python.git
 ```
 
 ## Documentación
-
-### Documentación ComproPago Python SDK
-
-### Documentación de ComproPago
 
 **[API de ComproPago](https://compropago.com/documentacion/api)**
 
@@ -84,7 +87,6 @@ Para poder hacer uso de la librería es necesario incluir la librería principal
 
 ```python
 from compropago.client import Client
-from compropago.tools.validations import Validations
 from compropago.factory.factory import Factory
 ```
 
@@ -125,13 +127,13 @@ de la variable **client** como se muestra a continuación.
 
 
 ```python
-
 order_info = {
     'order_id': 123,
     'order_name': 'M4 unit python',
     'order_price': 123.45,
     'customer_name': 'Eduardo Aguilar',
-    'customer_email': 'eduardo.aguilar@compropago.com'
+    'customer_email': 'eduardo.aguilar@compropago.com',
+    'payment_type': 'OXXO'
 }
 
 order = Factory.get_instance_of('PlaceOrderInfo', order_info)
@@ -195,10 +197,10 @@ providers = client.api.list_providers()
 
 ```python
 # @param [Bolean] auth
-# @param [Float] limit
-# @param [Bolean] fetch
+# @param [Float]  limit
+# @param [string] currency
 # @return [list]
-def list_providers(self, auth = False, limit = 0)
+def list_providers(self, auth = False, limit = 0, currency = 'MXN')
 ```
 
 ##### Envío de instrucciones SMS
