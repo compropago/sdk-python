@@ -8,3 +8,4 @@ compropago/*.pyc
 compropago/tools/*.pyc
 compropago/factory/*.pyc
 compropago/factory/models/*.pyc
+dist/
