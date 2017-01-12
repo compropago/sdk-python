@@ -2,7 +2,7 @@
 
 ## Descripción
 
-La el paquete de `ComproPago Python SDK` le permite interactuar con el API de ComproPago en su aplicación.
+El paquete de `ComproPago Python SDK` le permite interactuar con el API de ComproPago en su aplicación.
 También cuenta con los métodos necesarios para facilitar el desarrollo por medio de los servicios
 más utilizados (SDK).
 
