@@ -1,4 +1,6 @@
 import unittest
+import time
+import calendar
 from compropago.client import Client
 from compropago.tools.validations import Validations
 from compropago.factory.factory import Factory
@@ -49,7 +51,7 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(res)
 
-    def test_service_providers(self):
+    def test_providers(self):
         res = False
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)
@@ -61,7 +63,7 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(res)
 
-    def test_service_providers_limit(self):
+    def test_providers_limit(self):
         res = True
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)
@@ -76,7 +78,7 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(res)
 
-    def test_service_providers_auth(self):
+    def test_providers_auth(self):
         res = False
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)
@@ -88,7 +90,7 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(res)
 
-    def test_service_providers_auth_limit(self):
+    def test_providers_auth_limit(self):
         res = True
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)
@@ -118,7 +120,7 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(res)
 
-    def test_service_place_order(self):
+    def test_place_order(self):
         res = False
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)
@@ -132,7 +134,25 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(res)
 
-    def test_service_verify_order(self):
+    def test_place_order_expdate(self):
+        res = False
+        try:
+            obj = Client(self.publickey, self.privatekey, self.mode)
+
+            epoch = calendar.timegm(time.gmtime()) + (6 * 60 * 60)
+            self.order_info['expiration_time'] = epoch
+
+            order = Factory.get_instance_of('PlaceOrderInfo', self.order_info)
+
+            response = obj.api.place_order(order)
+
+            res = (epoch == response.exp_date)
+        except Exception as e:
+            print(e.args)
+
+        self.assertTrue(res)
+
+    def test_verify_order(self):
         res = False
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)
@@ -147,7 +167,7 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(res)
 
-    def test_service_send_sms(self):
+    def test_send_sms(self):
         res = False
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)

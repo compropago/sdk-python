@@ -9,6 +9,7 @@ class PlaceOrderInfo:
     customer_email = None
     payment_type = None
     currency = None
+    expiration_time = None
     image_url = None
     app_client_name = None
     app_client_version = None
@@ -22,6 +23,7 @@ class PlaceOrderInfo:
         customer_email,
         payment_type="OXXO",
         currency="MXN",
+        expiration_time=None,
         image_url="",
         app_client_name="python-sdk",
         app_client_version=config.SETTINGS['sdk_version']
@@ -33,6 +35,7 @@ class PlaceOrderInfo:
         self.customer_email = customer_email
         self.payment_type = payment_type
         self.currency = currency
+        self.expiration_time = expiration_time
         self.image_url = image_url
         self.app_client_name = app_client_name
         self.app_client_version = app_client_version
