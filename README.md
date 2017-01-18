@@ -127,22 +127,35 @@ de la variable **client** como se muestra a continuación.
 
 
 ```python
+"""
+# @param [string|number] order_id    Identificador interno de la orden
+# @param [string] order_name         Nombre de la orden, productos o servicio
+# @param [float]  order_price        Monto de la orden
+# @param [string] customer_name      Nombre del cliente
+# @param [string] customer_email     Email del cliente
+# @param [string] payment_type       (default = OXXO) Tienda en la cual se realizara el deposito (internal_name de objetos Provider)
+# @param [string] currency           (default = MXN) Divisa de la moneda para elcobro (USD, EUR, GBP, MXN)
+# @param [int]    expiration_time    (default = nil) Fecha en formato Epoch para marcar la expiración de la orden
+"""
 order_info = {
     'order_id': 123,
     'order_name': 'M4 unit python',
     'order_price': 123.45,
     'customer_name': 'Eduardo Aguilar',
     'customer_email': 'eduardo.aguilar@compropago.com',
-    'payment_type': 'OXXO'
+    'payment_type': 'OXXO',
+    'currency': 'MXN',
+    'expiration_time': 1484786210
 }
 
 order = Factory.get_instance_of('PlaceOrderInfo', order_info)
 
 
+"""
 # Llamada al método 'place_order' del API para generar la órden
-
 # @param [PlaceOrderInfo] order
 # @return [NewOrderInfo]
+"""
 new_order = client.api.place_order(order)
 ```
 
@@ -164,7 +177,7 @@ atributo **id**.
 ```python
 
 # Guardar el ID de la orden
-order_id = "ch_xxxx_xxx_xxx_xxxx";
+order_id = "ch_xxxx_xxx_xxx_xxxx"
 
 # U obtenerlo de un objetdo NewOrderInfo
 order_id = new_order.id

@@ -50,6 +50,8 @@ class Http:
         else:
             final_headers = headers
 
+        print(self.data)
+
         response = requests.request(self.method, self.url, data=self.data, headers=final_headers)
 
         response = json.dumps(response.json())

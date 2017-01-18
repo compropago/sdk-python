@@ -32,6 +32,7 @@ class Serialize:
                 data['customer_email'],
                 data['payment_type'] if 'payment_type' in data else 'OXXO',
                 data['currency'] if 'currency' in data else 'MXN',
+                data['expiration_time'] if 'expiration_time' in data else None,
                 data['image_url'] if 'image_url' in data else "",
                 data['app_client_name'] if 'app_client_name' in data else "python-sdk",
                 data['app_client_version'] if 'app_client_version' in data else config.SETTINGS['sdk_version']
