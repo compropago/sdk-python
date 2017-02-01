@@ -1,6 +1,7 @@
 class Provider:
     name = None
     store_image = None
+    availability = None
     is_active = None
     internal_name = None
     image_small = None

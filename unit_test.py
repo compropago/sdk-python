@@ -67,34 +67,7 @@ class UnitTest(unittest.TestCase):
         res = True
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)
-            provs = obj.api.list_providers(False, self.limit)
-
-            for prov in provs:
-                if prov.transaction_limit < self.limit:
-                    res = False
-                    break
-        except Exception as e:
-            print(e.args)
-
-        self.assertTrue(res)
-
-    def test_providers_auth(self):
-        res = False
-        try:
-            obj = Client(self.publickey, self.privatekey, self.mode)
-            provs = obj.api.list_providers(True)
-
-            res = (type(provs) is list and isinstance(provs[0], Provider))
-        except Exception as e:
-            print(e.args)
-
-        self.assertTrue(res)
-
-    def test_providers_auth_limit(self):
-        res = True
-        try:
-            obj = Client(self.publickey, self.privatekey, self.mode)
-            provs = obj.api.list_providers(False, self.limit)
+            provs = obj.api.list_providers(self.limit)
 
             for prov in provs:
                 if prov.transaction_limit < self.limit:
@@ -109,10 +82,10 @@ class UnitTest(unittest.TestCase):
         res = True
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)
-            provs = obj.api.list_providers(False, 700, 'USD')
+            provs = obj.api.list_providers(700, 'USD')
 
             for prov in provs:
-                if prov.transaction_limit < 15000:
+                if prov.transaction_limit < self.limit:
                     res = False
                     break
         except Exception as e:

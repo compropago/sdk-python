@@ -7,19 +7,20 @@ class Service:
     def __init__(self, client):
         self.client = client
 
+    def get_auth(self):
+        return {
+            "user": self.client.get_user(),
+            "pass": self.client.get_pass()
+        }
+
     """
     # @param  [boolean] auth
     # @param  [float]   limit
     # @param  [string]  currency
-    # @return [Array<Provider>]
+    # @return [list<Provider>]
     """
-    def list_providers(self, auth=False, limit=0, currency='MXN'):
-        if auth:
-            uri = self.client.deploy_uri+'providers/'
-            keys = {'user': self.client.get_user(), 'pass': self.client.get_pass()}
-        else:
-            uri = self.client.deploy_uri+'providers/true/'
-            keys = None
+    def list_providers(self, limit=0, currency='MXN'):
+        uri = self.client.deploy_uri+'providers/'
 
         if limit > 0:
             uri += '?order_total='+str(limit)
@@ -27,7 +28,7 @@ class Service:
         if limit > 0 and currency and currency != 'MXN':
             uri += '&currency='+currency
 
-        response = Request.get(url=uri, auth=keys)
+        response = Request.get(url=uri, auth=self.get_auth())
 
         return Factory.get_instance_of(class_name='ListProviders', data=response)
 
@@ -36,13 +37,8 @@ class Service:
     # @return [CpOrderInfo]
     """
     def verify_order(self, order_id):
-        response = Request.get(
-            self.client.deploy_uri+'charges/'+order_id+'/',
-            {'user': self.client.get_user(), 'pass': self.client.get_pass()}
-        )
-
+        response = Request.get(self.client.deploy_uri+'charges/'+order_id+'/', self.get_auth())
         obj = Factory.get_instance_of('CpOrderInfo', response)
-
         return obj
 
     """
@@ -67,12 +63,7 @@ class Service:
             "app_client_version": order.app_client_version
         }
 
-        response = Request.post(
-            self.client.deploy_uri+'charges/',
-            params,
-            {'user': self.client.get_user(), 'pass': self.client.get_pass()}
-        )
-
+        response = Request.post(self.client.deploy_uri+'charges/', params, self.get_auth())
         obj = Factory.get_instance_of('NewOrderInfo', response)
 
         return obj
@@ -85,12 +76,7 @@ class Service:
     def send_sms_instructions(self, number, order_id):
         params = {"customer_phone": number}
 
-        res = Request.post(
-            self.client.deploy_uri+'charges/'+order_id+'/sms/',
-            params,
-            {'user': self.client.get_user(), 'pass': self.client.get_pass()}
-        )
-
+        res = Request.post(self.client.deploy_uri+'charges/'+order_id+'/sms/', params, self.get_auth())
         obj = Factory.get_instance_of('SmsInfo', res)
 
         return obj
@@ -102,12 +88,7 @@ class Service:
     def create_webhook(self, url):
         params = {"url": url}
 
-        res = Request.post(
-            self.client.deploy_uri+'webhooks/stores/',
-            params,
-            {'user': self.client.get_user(), 'pass': self.client.get_pass()}
-        )
-
+        res = Request.post(self.client.deploy_uri+'webhooks/stores/', params, self.get_auth())
         obj = Factory.get_instance_of('Webhook', res)
 
         return obj
@@ -120,12 +101,7 @@ class Service:
     def update_webhook(self, webhook_id, url):
         params = {"url": url}
 
-        res = Request.put(
-            self.client.deploy_uri+'webhooks/stores/'+webhook_id+'/',
-            params,
-            {'user': self.client.get_user(), 'pass': self.client.get_pass()}
-        )
-
+        res = Request.put(self.client.deploy_uri+'webhooks/stores/'+webhook_id+'/', params, self.get_auth())
         obj = Factory.get_instance_of('Webhook', res)
 
         return obj
@@ -135,25 +111,16 @@ class Service:
     # @return [Webhook]
     """
     def delete_webhook(self, webhook_id):
-        res = Request.delete(
-            self.client.deploy_uri+'webhooks/stores/'+webhook_id+'/',
-            None,
-            {'user': self.client.get_user(), 'pass': self.client.get_pass()}
-        )
-
+        res = Request.delete(self.client.deploy_uri+'webhooks/stores/'+webhook_id+'/', None, self.get_auth())
         obj = Factory.get_instance_of('Webhook', res)
 
         return obj
 
     """
-    # @return [Array<Webhook>]
+    # @return [list<Webhook>]
     """
     def list_webhooks(self):
-        res = Request.get(
-            self.client.deploy_uri+'webhooks/stores/',
-            {'user': self.client.get_user(), 'pass': self.client.get_pass()}
-        )
-
+        res = Request.get(self.client.deploy_uri+'webhooks/stores/', self.get_auth())
         obj = Factory.get_instance_of('ListWebhooks', res)
 
         return obj
