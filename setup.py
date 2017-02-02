@@ -7,7 +7,7 @@ setup(
     'compropago/factory/models',
     'compropago/tools'
   ],
-  version='1.0.2',
+  version='1.0.2.1',
   description='SDK python para ComproPago',
   author='Eduardo Aguilar',
   author_email='eduardo.aguilar@compropago.com',
