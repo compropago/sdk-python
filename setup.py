@@ -12,6 +12,6 @@ setup(
   author='Eduardo Aguilar',
   author_email='eduardo.aguilar@compropago.com',
   url='https://github.com/compropago/sdk-python',
-  download_url='https://github.com/compropago/sdk-python/tarball/1.0.2',
+  download_url='https://github.com/compropago/sdk-python/tarball/1.0.2.1',
   keywords=['payments', 'sdk', 'gateway', 'compropago', 'cash'],
 )
