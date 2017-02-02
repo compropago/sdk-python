@@ -112,9 +112,6 @@ client = Client(
 
 ### Uso Básico de la libreria
 
-> Consulta la documentación de la librería Python de ComproPago para conocer más de sus capacidades, configuraciones y métodos.
-
-
 #### Llamados al los servicios por SDK
 
 Para poder hacer uso de los servicios de ComproPago, solo debes llamar a los métodos contenidos en la propiedad **api**
@@ -135,7 +132,7 @@ de la variable **client** como se muestra a continuación.
 # @param [string] customer_email     Email del cliente
 # @param [string] payment_type       (default = OXXO) Tienda en la cual se realizara el deposito (internal_name de objetos Provider)
 # @param [string] currency           (default = MXN) Divisa de la moneda para elcobro (USD, EUR, GBP, MXN)
-# @param [int]    expiration_time    (default = nil) Fecha en formato Epoch para marcar la expiración de la orden
+# @param [string] expiration_time    (default = nil) Fecha en formato Epoch para marcar la expiración de la orden
 """
 order_info = {
     'order_id': 123,
@@ -145,7 +142,7 @@ order_info = {
     'customer_email': 'eduardo.aguilar@compropago.com',
     'payment_type': 'OXXO',
     'currency': 'MXN',
-    'expiration_time': 1484786210
+    'expiration_time': '1484786210'
 }
 
 order = Factory.get_instance_of('PlaceOrderInfo', order_info)
@@ -209,11 +206,10 @@ providers = client.api.list_providers()
 ###### Prototipo del metodo get_providers()
 
 ```python
-# @param [Bolean] auth
 # @param [Float]  limit
 # @param [string] currency
 # @return [list]
-def list_providers(self, auth = False, limit = 0, currency = 'MXN')
+def list_providers(self, limit = 0, currency = 'MXN')
 ```
 
 ##### Envío de instrucciones SMS
