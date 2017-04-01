@@ -6,7 +6,7 @@ El paquete de `ComproPago Python SDK` le permite interactuar con el API de Compr
 También cuenta con los métodos necesarios para facilitar el desarrollo por medio de los servicios
 más utilizados (SDK).
 
-Con ComproPago puede recibir pagos en OXXO, 7Eleven y más tiendas en todo México.
+Con ComproPago puede recibir pagos en 7Eleven, Extra y más tiendas en todo México.
 
 [Registrarse en ComproPago](https://compropago.com)
 
@@ -130,7 +130,7 @@ de la variable **client** como se muestra a continuación.
 # @param [float]  order_price        Monto de la orden
 # @param [string] customer_name      Nombre del cliente
 # @param [string] customer_email     Email del cliente
-# @param [string] payment_type       (default = OXXO) Tienda en la cual se realizara el deposito (internal_name de objetos Provider)
+# @param [string] payment_type       (default = SEVEN_ELEVEN) Tienda en la cual se realizara el deposito (internal_name de objetos Provider)
 # @param [string] currency           (default = MXN) Divisa de la moneda para elcobro (USD, EUR, GBP, MXN)
 # @param [string] expiration_time    (default = nil) Fecha en formato Epoch para marcar la expiración de la orden
 """
@@ -140,7 +140,7 @@ order_info = {
     'order_price': 123.45,
     'customer_name': 'Eduardo Aguilar',
     'customer_email': 'eduardo.aguilar@compropago.com',
-    'payment_type': 'OXXO',
+    'payment_type': 'SEVEN_ELEVEN',
     'currency': 'MXN',
     'expiration_time': '1484786210'
 }
