@@ -10,4 +10,5 @@ compropago/*.pyc
 compropago/tools/*.pyc
 compropago/factory/*.pyc
 compropago/factory/models/*.pyc
+__pycache__/unit_test.cpython-36.pyc
 dist/
