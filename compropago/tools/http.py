@@ -23,7 +23,7 @@ class Http:
     def set_auth(self, auth):
         if type(auth) is dict:
             aux_auth = auth['user']+':'+auth['pass']
-            self.auth = base64.b64encode(bytes(aux_auth, "utf-8")).decode("utf-8")
+            self.auth = base64.b64encode(bytes(aux_auth, 'utf-8')).decode("utf-8")
 
     def set_data(self, data):
         if type(data) is dict and data:

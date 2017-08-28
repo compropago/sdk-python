@@ -1,5 +1,7 @@
 .idea/
 prueba.py
+extra_test.py
+*.json
 compropago/__pycache__/
 compropago/tools/__pycache__/
 compropago/factory/__pycache__/

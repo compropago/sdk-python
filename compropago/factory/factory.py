@@ -55,5 +55,7 @@ class Factory:
                 array_aux.append(Serialize.webhook(webhook))
 
             return array_aux
+        elif class_name is 'Exchange':
+            return Serialize.exchange(data)
         else:
             raise Exception('Object not in factory.')
