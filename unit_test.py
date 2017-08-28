@@ -119,7 +119,7 @@ class UnitTest(unittest.TestCase):
 
             response = obj.api.place_order(order)
 
-            res = (epoch == response.exp_date)
+            res = (epoch == response.expires_at)
         except Exception as e:
             print(e.args)
 
@@ -207,6 +207,20 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(res)
 
+    def test_deactive_webhook(self):
+        webhook_id = '6e2ebaa1-6286-422d-8dd1-69e0f84d3f35'
+        res = False
+
+        try:
+            obj = Client(self.publickey, self.privatekey, self.mode)
+            deactive = obj.api.deactive_webhook(webhook_id)
+
+            if type(deactive) is Webhook and deactive.status == 'deactivated':
+                res = True
+        except Exception as e:
+            print(e.args)
+
+        self.assertTrue(res)
 
 if __name__ == '__main__':
     unittest.main()
