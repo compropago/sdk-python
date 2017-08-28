@@ -14,10 +14,14 @@ class Service:
         }
 
     """
+    # Get providers list
+    #
     # @param  [boolean] auth
     # @param  [float]   limit
     # @param  [string]  currency
     # @return [list<Provider>]
+    #
+    # @author Eduardo Aguilar <dante.aguilar41@gmail.com>
     """
     def list_providers(self, limit=0, currency='MXN'):
         uri = self.client.deploy_uri+'providers/'
@@ -33,8 +37,12 @@ class Service:
         return Factory.get_instance_of(class_name='ListProviders', data=response)
 
     """
+    # Get info of a specific order
+    #
     # @param  [string] order_id
     # @return [CpOrderInfo]
+    # 
+    # @author Eduardo Aguilar <dante.aguilar41@gmail.com>
     """
     def verify_order(self, order_id):
         response = Request.get(self.client.deploy_uri+'charges/'+order_id+'/', self.get_auth())
@@ -42,8 +50,12 @@ class Service:
         return obj
 
     """
+    # Create an order
+    # 
     # @param  [PlaceOrderInfo] order
     # @return [NewOrderInfo]
+    #
+    # @author Eduardo Aguilar <dante.aguilar41@gmail.com>
     """
     def place_order(self, order):
         if not isinstance(order, PlaceOrderInfo):
@@ -69,9 +81,13 @@ class Service:
         return obj
 
     """
+    # Send sms instrucctions for a charge
+    #
     # @param  [string] number
     # @param  [string] order_id
     # @return [SmsInfo]
+    #
+    # @author Eduardo Aguilar <dante.aguilar41@gmail.com>
     """
     def send_sms_instructions(self, number, order_id):
         params = {"customer_phone": number}
@@ -82,8 +98,12 @@ class Service:
         return obj
 
     """
+    # Register new secondary Webhook
+    #
     # @param  [string] url
     # @return [Webhook]
+    #
+    # @author Eduardo Aguilar <dante.aguilar41@gmail.com>
     """
     def create_webhook(self, url):
         params = {"url": url}
@@ -94,12 +114,20 @@ class Service:
         return obj
 
     """
+    # Update a webhook URL
+    #
     # @param  [string] webhook_id
     # @param  [string] url
+    # @param  [string] type (secondary | primary)
     # @return [Webhook]
+    #
+    # @author Eduardo Aguilar <dante.aguilar41@gmail.com>
     """
-    def update_webhook(self, webhook_id, url):
-        params = {"url": url}
+    def update_webhook(self, webhook_id, url=None, type=None):
+        params = {
+            "url": url,
+            "webhookType": type
+        }
 
         res = Request.put(self.client.deploy_uri+'webhooks/stores/'+webhook_id+'/', params, self.get_auth())
         obj = Factory.get_instance_of('Webhook', res)
@@ -107,8 +135,12 @@ class Service:
         return obj
 
     """
+    # Delete a webhook URL
+    #
     # @param  [string] webhook_id
     # @return [Webhook]
+    #
+    # @author Eduardo Aguilar <dante.aguilar41@gmail.com>
     """
     def delete_webhook(self, webhook_id):
         res = Request.delete(self.client.deploy_uri+'webhooks/stores/'+webhook_id+'/', None, self.get_auth())
@@ -117,7 +149,25 @@ class Service:
         return obj
 
     """
+    # Deactive a webhook URL
+    #
+    # @param [string] webhook_id
+    # @return [Webhook]
+    # 
+    # @author Eduardo Aguilar <dante.aguilar41@gmail.com>
+    """
+    def deactive_webhook(self, webhook_id):
+        res = Request.delete(self.client.deploy_uri+'webhooks/stores/'+webhook_id+'/deactive', None, self.get_auth())
+        obj = Factory.get_instance_of('Webhook', res)
+
+        return obj
+
+    """
+    # Get full list of webhooks
+    #
     # @return [list<Webhook>]
+    #
+    # @author Eduardo Aguilar <dante.aguilar41@gmail.com>
     """
     def list_webhooks(self):
         res = Request.get(self.client.deploy_uri+'webhooks/stores/', self.get_auth())

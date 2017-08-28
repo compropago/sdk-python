@@ -278,16 +278,17 @@ Para actualizar la url de un webhook, se debe de llamar al método **update_webh
 atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **Webhook**
 
 ```python
-updated_webhook = client.api.update_webhook(webhook.id, 'http://sitio.com/nuevo_webhook')
+updated_webhook = client.api.update_webhook(webhook.id, 'http://sitio.com/nuevo_webhook', 'secondary')
 ```
 
 ###### Prototipo del método update_webhook()
 
 ```python
 # @param [String] url
-# @param [String] id
+# @param [String] webhook_id
+# @param [string] type (secondary | primary)
 # @return [Webhook]
-def update_webhook(self, id, url)
+def update_webhook(self, webhook_id, url, type)
 ```
 
 ##### Eliminar un Webhook
@@ -302,9 +303,26 @@ deleted_webhook = client.api.delete_webhook(webhook.id)
 ###### Prototipo del método delete_webhook()
 
 ```python
-# @param [String] id
+# @param [String] webhook_id
 # @return [Webhook]
-def delete_webhook(self, id)
+def delete_webhook(self, webhook_id)
+```
+
+##### Desactivar un webhook 
+
+Para desactivar un webhook y evitar que reciba notificaciones sin eliminarlo debe de ocupar la función **deactive_webhook**
+que se encuentra alojado en el atributo **api** del objeto **Client** y el cual regresa una instancia de tipo **Webhook**
+
+```python
+updated_webhook = client.api.deactive_webhook(webhook.id)
+```
+
+###### Prototipo del método deactive_webhook()
+
+```python
+# @param [string] webhook_id
+# @return [Webhook]
+def deactive_webhook(self, webhook_id)
 ```
 
 ##### Obtener listado de Webhooks registrados

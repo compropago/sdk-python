@@ -13,6 +13,7 @@ from compropago.factory.models.smsinfo import SmsInfo
 from compropago.factory.models.smsobject import SmsObject
 from compropago.factory.models.smsdata import SmsData
 from compropago.factory.models.webhook import Webhook
+from compropago.factory.models.exchange import Exchange
 
 
 class Serialize:
@@ -46,26 +47,24 @@ class Serialize:
             obj = CpOrderInfo()
 
             obj.id = data['id']
+            obj.short_id = data['short_id']
             obj.type = data['type']
             obj.object = data['object']
-            obj.created = data['created']
+            obj.livemode = data['livemode']
+            obj.created_at = data['created_at']
+            obj.accepted_at = data['accepted_at']
+            obj.expires_at = data['expires_at']
             obj.paid = data['paid']
             obj.amount = data['amount']
-            obj.livemode = data['livemode']
             obj.currency = data['currency']
             obj.refunded = data['refunded']
             obj.fee = data['fee']
 
             obj.fee_details = Serialize.fee_details(data['fee_details'])
             obj.order_info = Serialize.order_info(data['order_info'])
-            obj.customer.customer_name = Serialize.customer(data['customer'])
+            obj.customer = Serialize.customer(data['customer'])
 
-            obj.captured = data['captured']
-            obj.failure_message = data['failure_message']
-            obj.failure_code = data['failure_code']
-            obj.amount_refunded = data['amount_refunded']
-            obj.description = data['description']
-            obj.dispute = data['dispute']
+            obj.api_version = data['api_version']
 
             return obj
 
@@ -107,9 +106,7 @@ class Serialize:
             obj.amount = data['amount'] if 'amount' in data else None
             obj.currency = data['currency'] if 'currency' in data else None
             obj.type = data['type'] if 'type' in data else None
-            obj.description = data['description'] if 'description' in data else None
             obj.application = data['application'] if 'application' in data else None
-            obj.tax_percent = data['tax_percent'] if 'tax_percent' in data else None
             obj.amount_refunded = data['amount_refunded'] if 'amount_refunded' in data else None
             obj.tax = data['tax'] if 'tax' in data else None
 
@@ -165,14 +162,24 @@ class Serialize:
 
             obj.id = data['id']
             obj.short_id = data['short_id']
+            obj.type = data['type']
             obj.object = data['object']
-            obj.status = data['status']
-            obj.created = data['created']
-            obj.exp_date = data['exp_date']
-            obj.live_mode = data['live_mode']
-            obj.order_info = Serialize.order_info(data['order_info'])
+            obj.created_at = data['created_at']
+            obj.accepted_at = data['accepted_at']
+            obj.expires_at = data['expires_at']
+            obj.paid = data['paid']
+            obj.amount = data['amount']
+            obj.livemode = data['livemode']
+            obj.currency = data['currency']
+            obj.refunded = data['refunded']
+            obj.fee = data['fee']
+
             obj.fee_details = Serialize.fee_details(data['fee_details'])
+            obj.order_info = Serialize.order_info(data['order_info'])
+            obj.customer = Serialize.customer(data['customer'])
             obj.instructions = Serialize.instructions(data['instructions'])
+
+            obj. api_version = data['api_version']
 
             return obj
 
@@ -191,6 +198,9 @@ class Serialize:
             obj.country = data['country'] if 'country' in data else None
             obj.image_url = data['image_url'] if 'image_url' in data else None
             obj.success_url = data['success_url'] if 'success_url' in data else None
+            obj.failed_url = data['failed_url'] if 'failed_url' in data else None
+
+            obj.exchange = Serialize.exchange(data['exchange'])
 
             return obj
 
@@ -262,5 +272,22 @@ class Serialize:
             obj.url = data['url'] if 'url' in data else None
             obj.mode = data['mode'] if 'mode' in data else None
             obj.status = data['status'] if 'status' in data else None
+            obj.type = data['type'] if 'type' in data else None
+
+            return obj
+
+    @staticmethod
+    def exchange(data=None):
+        if not data:
+            return Exchange()
+        else:
+            obj = Exchange()
+
+            obj.rate = data['rate'] if 'rate' in data else None
+            obj.request = data['request'] if 'request' in data else None
+            obj.final_amount = data['final_amount'] if 'final_amount' in data else None
+            obj.origin_amount = data['origin_amount'] if 'origin_amount' in data else None
+            obj.final_currency = data['final_currency'] if 'final_currency' in data else None
+            obj.origin_currency = data['origin_currency'] if 'origin_currency' in data else None
 
             return obj
