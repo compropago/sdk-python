@@ -8,6 +8,7 @@ class Provider:
     image_large = None
     transaction_limit = None
     rank = None
+    commission = None
 
     def __init__(self):
         pass

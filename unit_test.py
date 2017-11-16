@@ -14,11 +14,12 @@ from compropago.factory.models.webhook import Webhook
 
 class UnitTest(unittest.TestCase):
     def setUp(self):
-        self.publickey = 'pk_test_638e8b14112423a086'
-        self.privatekey = 'sk_test_9c95e149614142822f'
+        self.publickey = 'pk_test_8781245a88240f9cf'
+        self.privatekey = 'sk_test_56e31883637446b1b'
         self.mode = False
         self.phone_number = '5561463627'
         self.limit = 15000
+        
         self.order_info = {
             'order_id': 123,
             'order_name': 'M4 python sdk',
@@ -67,34 +68,7 @@ class UnitTest(unittest.TestCase):
         res = True
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)
-            provs = obj.api.list_providers(False, self.limit)
-
-            for prov in provs:
-                if prov.transaction_limit < self.limit:
-                    res = False
-                    break
-        except Exception as e:
-            print(e.args)
-
-        self.assertTrue(res)
-
-    def test_providers_auth(self):
-        res = False
-        try:
-            obj = Client(self.publickey, self.privatekey, self.mode)
-            provs = obj.api.list_providers(True)
-
-            res = (type(provs) is list and isinstance(provs[0], Provider))
-        except Exception as e:
-            print(e.args)
-
-        self.assertTrue(res)
-
-    def test_providers_auth_limit(self):
-        res = True
-        try:
-            obj = Client(self.publickey, self.privatekey, self.mode)
-            provs = obj.api.list_providers(False, self.limit)
+            provs = obj.api.list_providers(self.limit, 'MXN')
 
             for prov in provs:
                 if prov.transaction_limit < self.limit:
@@ -109,7 +83,7 @@ class UnitTest(unittest.TestCase):
         res = True
         try:
             obj = Client(self.publickey, self.privatekey, self.mode)
-            provs = obj.api.list_providers(False, 700, 'USD')
+            provs = obj.api.list_providers(700, 'USD')
 
             for prov in provs:
                 if prov.transaction_limit < 15000:
