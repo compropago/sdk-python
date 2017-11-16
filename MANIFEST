@@ -12,6 +12,7 @@ compropago/factory/models/__init__.py
 compropago/factory/models/cporderinfo.py
 compropago/factory/models/customer.py
 compropago/factory/models/evalauthinfo.py
+compropago/factory/models/exchange.py
 compropago/factory/models/feedetails.py
 compropago/factory/models/instructiondetails.py
 compropago/factory/models/instructions.py

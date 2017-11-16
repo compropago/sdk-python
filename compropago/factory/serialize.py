@@ -13,6 +13,7 @@ from compropago.factory.models.smsinfo import SmsInfo
 from compropago.factory.models.smsobject import SmsObject
 from compropago.factory.models.smsdata import SmsData
 from compropago.factory.models.webhook import Webhook
+from compropago.factory.models.exchange import Exchange
 
 
 class Serialize:
@@ -173,6 +174,7 @@ class Serialize:
             obj.order_info = Serialize.order_info(data['order_info'])
             obj.fee_details = Serialize.fee_details(data['fee_details'])
             obj.instructions = Serialize.instructions(data['instructions'])
+            obj.api_version = data['api_version']
 
             return obj
 
@@ -191,6 +193,24 @@ class Serialize:
             obj.country = data['country'] if 'country' in data else None
             obj.image_url = data['image_url'] if 'image_url' in data else None
             obj.success_url = data['success_url'] if 'success_url' in data else None
+            obj.exchange = Serialize.exchange(data['exchange'])
+
+            return obj
+
+    @staticmethod
+    def exchange(data=None):
+        if not data:
+            return Exchange()
+        else:
+            obj = Exchange()
+
+            obj.rate = data['rate']
+            obj.request = data['request']
+            obj.origin_amount = data['origin_amount']
+            obj.final_amount = data['final_amount']
+            obj.origin_currency = data['origin_currency']
+            obj.final_currency = data['final_currency']
+            obj.exchange_id = data['exchange_id']
 
             return obj
 
@@ -210,6 +230,7 @@ class Serialize:
             obj.image_large = data['image_large']
             obj.transaction_limit = data['transaction_limit']
             obj.rank = data['rank']
+            obj.commission = data['commission']
 
             return obj
 

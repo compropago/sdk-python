@@ -2,7 +2,7 @@ import compropago.config as config
 from compropago.service import Service
 
 
-class Client:
+class Client: 
     def __init__(self, publickey, privatekey, live):
         self.publickey = publickey
         self.privatekey = privatekey

@@ -14,6 +14,7 @@ class NewOrderInfo:
     order_info = None
     fee_details = None
     instructions = None
+    api_version = None
 
     def __init__(self):
         self.order_info = OrderInfo()
