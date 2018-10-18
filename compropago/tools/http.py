@@ -42,7 +42,7 @@ class Http:
         final_headers = dict()
 
         if self.auth:
-            headers['authorization'] = self.auth
+            headers['authorization'] = "Basic " + self.auth
 
         if self.extra_headers:
             for value in zip(headers, self.extra_headers):
